@@ -19,10 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Context\" />
     <Folder Include="Repositories\Interface\" />
     <Folder Include="Repositories\Data\" />
-    <Folder Include="Base\" />
   </ItemGroup>
 
 </Project>
