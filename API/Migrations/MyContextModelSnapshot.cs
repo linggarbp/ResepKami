@@ -153,6 +153,11 @@ namespace API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("password");
 
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("role_id");
+
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
@@ -161,6 +166,33 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tb_user");
+                });
+
+            modelBuilder.Entity("API.Models.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("tb_m_user_roles");
                 });
 
             modelBuilder.Entity("API.Models.Comment", b =>
@@ -204,6 +236,17 @@ namespace API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("API.Models.UserRole", b =>
+                {
+                    b.HasOne("API.Models.User", "User")
+                        .WithOne("UserRole")
+                        .HasForeignKey("API.Models.UserRole", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Navigation("Ingredients");
@@ -214,6 +257,8 @@ namespace API.Migrations
                     b.Navigation("Comments");
 
                     b.Navigation("Recipes");
+
+                    b.Navigation("UserRole");
                 });
 #pragma warning restore 612, 618
         }

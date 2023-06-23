@@ -23,7 +23,14 @@ public class User
     [Column("password", TypeName = "varchar(255)")]
     public string Password { get; set; }
 
+    // user id
+    [Column("role_id", TypeName = "char(5)")]
+    public string RoleId { get; set; }
+
     // Cardinality
+    [JsonIgnore]
+    public UserRole? UserRole{ get; set; }
+    
     [JsonIgnore]
     public ICollection<Recipe>? Recipes { get; set; }
 

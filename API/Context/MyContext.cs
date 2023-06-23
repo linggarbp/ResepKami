@@ -7,6 +7,7 @@ public class MyContext : DbContext
 {
     public MyContext(DbContextOptions<MyContext> options) : base(options) { }
     public DbSet<User> Users { get; set; }
+    public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
     public DbSet<Comment> Comments { get; set; }
@@ -34,6 +35,13 @@ public class MyContext : DbContext
                     .HasMany(c => c.Comments)
                     .WithOne(u => u.User)
                     .HasForeignKey(c => c.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+        //One User has one role
+        modelBuilder.Entity<User>()
+                    .HasOne(r => r.UserRole)
+                    .WithOne(u => u.User)
+                    .HasForeignKey<UserRole>(u => u.UserId)
                     .OnDelete(DeleteBehavior.Restrict);
     }
 

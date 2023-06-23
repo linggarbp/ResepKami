@@ -18,11 +18,32 @@ namespace API.Migrations
                     id = table.Column<string>(type: "char(5)", nullable: false),
                     username = table.Column<string>(type: "varchar(50)", nullable: false),
                     email = table.Column<string>(type: "varchar(50)", nullable: false),
-                    password = table.Column<string>(type: "varchar(255)", nullable: false)
+                    password = table.Column<string>(type: "varchar(255)", nullable: false),
+                    role_id = table.Column<string>(type: "char(5)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tb_user", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tb_m_user_roles",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "char(5)", nullable: false),
+                    user_id = table.Column<string>(type: "char(5)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_m_user_roles", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_tb_m_user_roles_tb_user_user_id",
+                        column: x => x.user_id,
+                        principalTable: "tb_user",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,6 +134,12 @@ namespace API.Migrations
                 column: "id_resep");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tb_m_user_roles_user_id",
+                table: "tb_m_user_roles",
+                column: "user_id",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tb_recipe_user_id",
                 table: "tb_recipe",
                 column: "user_id");
@@ -126,6 +153,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_ingredient");
+
+            migrationBuilder.DropTable(
+                name: "tb_m_user_roles");
 
             migrationBuilder.DropTable(
                 name: "tb_recipe");
