@@ -8,11 +8,11 @@ namespace API.Models;
 public class User
 {
     // user id
-    [Key, Column("user_id", TypeName = "char(5)")]
-    public string UserId { get; set; }
+    [Key, Column("id", TypeName = "char(5)")]
+    public string Id { get; set; }
 
     // user name
-    [Column("user_name", TypeName = "varchar(50)")]
+    [Column("username", TypeName = "varchar(50)")]
     public string UserName { get; set; }
 
     // user email
@@ -24,6 +24,10 @@ public class User
     public string Password { get; set; }
 
     // Cardinality
-   
+    [JsonIgnore]
+    public ICollection<Recipe>? Recipes { get; set; }
+
+    [JsonIgnore]
+    public ICollection<Comment>? Comments { get; set; }
 
 }

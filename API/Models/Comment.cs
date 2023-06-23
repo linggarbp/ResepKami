@@ -7,7 +7,7 @@ namespace API.Models;
 public class Comment
 {
     // id
-    [Key, Column("id_komen", TypeName = "char(100)")]
+    [Key, Column("id", TypeName = "char(100)")]
     public string Id { get; set; }
 
     // id resep (FK)
@@ -15,7 +15,7 @@ public class Comment
     public string RecipeId { get; set; }
 
     // id pengguna (FK)
-    [Column("user_id", TypeName = "char(5")]
+    [Column("user_id", TypeName = "char(5)")]
     public string UserId { get; set; }
 
     // tanggal komentar
@@ -25,6 +25,11 @@ public class Comment
     // isi komentar
     [Column("isi_komentar", TypeName = "varchar(255)")]
     public string ContentComment { get; set; }
-    
+
     // Cardinality //
+    [JsonIgnore]
+    public User? User { get; set; }
+
+    [JsonIgnore]
+    public Recipe? Recipe { get; set; }
 }

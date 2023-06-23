@@ -7,8 +7,8 @@ namespace API.Models;
 public class Recipe 
 {
     // id
-    [Key, Column("id_recipe", TypeName ="char(5)")]
-    public string RecipeId { get; set; }
+    [Key, Column("id", TypeName ="char(5)")]
+    public string Id { get; set; }
 
     // nama resep
     [Column("nm_resep", TypeName = "varchar(100)")]
@@ -18,7 +18,6 @@ public class Recipe
     [Column("deskripsi", TypeName = "varchar(255)")]
     public string Description { get; set; }
 
-    //
     // langkah - langkah 
     [Column("langkah", TypeName ="varchar(255)")]
     public string Step { get; set; }
@@ -35,6 +34,14 @@ public class Recipe
     [Column("kesulitan", TypeName = "varchar(20)")]
     public string Difficulty { get; set; }
 
+    //user id
+    [Column("user_id", TypeName = "char(5)")]
+    public string UserId { get; set; }
+
     // Cardinality
-  
+    [JsonIgnore]
+    public User? User { get; set; }
+
+    [JsonIgnore]
+    public ICollection<Ingredient>? Ingredients { get; set; }
 }

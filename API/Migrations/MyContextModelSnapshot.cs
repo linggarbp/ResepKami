@@ -25,9 +25,8 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Comment", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(100)")
-                        .HasColumnName("id_komen");
+                        .HasColumnName("id");
 
                     b.Property<DateTime>("CommentDate")
                         .HasColumnType("datetime")
@@ -38,42 +37,63 @@ namespace API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("isi_komentar");
 
+                    b.Property<string>("RecipeId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("id_recipe");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Comments");
+                    b.HasIndex("RecipeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("tb_comment");
                 });
 
             modelBuilder.Entity("API.Models.Ingredient", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("varchar(100)")
+                        .HasColumnType("char(5)")
                         .HasColumnName("id_bahan");
 
                     b.Property<string>("IngredientName")
                         .IsRequired()
-                        .HasColumnType("varchar(100)")
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("nm_bahan");
+
+                    b.Property<string>("RecipeId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("id_resep");
 
                     b.Property<string>("Total")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("jumlah");
 
                     b.Property<string>("Unit")
                         .IsRequired()
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("varchar(50)")
                         .HasColumnName("satuan");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredients");
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("tb_ingredient");
                 });
 
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
-                    b.Property<string>("RecipeId")
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("id_recipe");
+                    b.Property<string>("Id")
+                        .HasColumnType("char(5)")
+                        .HasColumnName("id");
 
                     b.Property<string>("CookingTime")
                         .IsRequired()
@@ -90,11 +110,6 @@ namespace API.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("kesulitan");
 
-                    b.Property<string>("Ingredient")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("bahan");
-
                     b.Property<string>("PrepareTime")
                         .IsRequired()
                         .HasColumnType("varchar(20)")
@@ -110,16 +125,23 @@ namespace API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("langkah");
 
-                    b.HasKey("RecipeId");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("user_id");
 
-                    b.ToTable("tb_m_recipe");
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("tb_recipe");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("char(5")
-                        .HasColumnName("user_id");
+                    b.Property<string>("Id")
+                        .HasColumnType("char(5)")
+                        .HasColumnName("id");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -134,11 +156,64 @@ namespace API.Migrations
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
-                        .HasColumnName("user_name");
+                        .HasColumnName("username");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.ToTable("tb_user");
+                });
+
+            modelBuilder.Entity("API.Models.Comment", b =>
+                {
+                    b.HasOne("API.Models.Recipe", "Recipe")
+                        .WithMany()
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Recipe");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Models.Ingredient", b =>
+                {
+                    b.HasOne("API.Models.Recipe", "Recipe")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("API.Models.Recipe", b =>
+                {
+                    b.HasOne("API.Models.User", "User")
+                        .WithMany("Recipes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Models.Recipe", b =>
+                {
+                    b.Navigation("Ingredients");
+                });
+
+            modelBuilder.Entity("API.Models.User", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Recipes");
                 });
 #pragma warning restore 612, 618
         }

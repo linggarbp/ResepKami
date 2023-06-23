@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
+
 namespace API.Models;
 [Table("tb_ingredient")]
 public class Ingredient
@@ -19,4 +21,12 @@ public class Ingredient
     // satuan
     [Column("satuan", TypeName = "varchar(50)")]
     public string Unit { get; set; }
+
+    // recipe id
+    [Column("id_resep", TypeName = "char(5)")]
+    public string RecipeId { get; set; }
+
+    //Cardinality
+    [JsonIgnore]
+    public Recipe? Recipe { get; set; }
 }
