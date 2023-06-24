@@ -1,6 +1,8 @@
-﻿namespace API.Repositories.Interface
+﻿using API.Models;
+
+namespace API.Repositories.Interface
 {
-    public interface IIngredientRepository
+    public interface IIngredientRepository : IGeneralRepository<Ingredient, string>
     {
     }
 }

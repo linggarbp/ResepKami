@@ -10,14 +10,16 @@ public class UserRole
 {
     [Key, Column("id")]
     public int Id { get; set; }
-    [Column("name", TypeName = "char(5)")]
-    public string Name { get; set; }
-
-    //user id
     [Column("user_id", TypeName = "char(5)")]
-    public string UserId { get; set; }
+    public string? UserId { get; set; }
+    
+    [Column("role_id")]
+    public int? RoleId { get; set; }
 
     //Cardinality
     [JsonIgnore]
     public User? User { get; set; }
+
+    [JsonIgnore]
+    public Role? Role { get; set; }
 }

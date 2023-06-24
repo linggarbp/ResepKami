@@ -12,14 +12,26 @@ namespace API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "tb_m_roles",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "varchar(50)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_m_roles", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tb_user",
                 columns: table => new
                 {
                     id = table.Column<string>(type: "char(5)", nullable: false),
                     username = table.Column<string>(type: "varchar(50)", nullable: false),
                     email = table.Column<string>(type: "varchar(50)", nullable: false),
-                    password = table.Column<string>(type: "varchar(255)", nullable: false),
-                    role_id = table.Column<string>(type: "char(5)", nullable: false)
+                    password = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,18 +44,24 @@ namespace API.Migrations
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    name = table.Column<string>(type: "char(5)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: false)
+                    user_id = table.Column<string>(type: "char(5)", nullable: true),
+                    role_id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_tb_m_user_roles", x => x.id);
                     table.ForeignKey(
+                        name: "FK_tb_m_user_roles_tb_m_roles_role_id",
+                        column: x => x.role_id,
+                        principalTable: "tb_m_roles",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
                         name: "FK_tb_m_user_roles_tb_user_user_id",
                         column: x => x.user_id,
                         principalTable: "tb_user",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,7 +75,7 @@ namespace API.Migrations
                     wkt_persiapan = table.Column<string>(type: "varchar(20)", nullable: false),
                     wkt_memasak = table.Column<string>(type: "varchar(20)", nullable: false),
                     kesulitan = table.Column<string>(type: "varchar(20)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: false)
+                    user_id = table.Column<string>(type: "char(5)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,7 +94,7 @@ namespace API.Migrations
                 {
                     id = table.Column<string>(type: "char(100)", nullable: false),
                     id_recipe = table.Column<string>(type: "char(5)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: false),
+                    user_id = table.Column<string>(type: "char(5)", nullable: true),
                     tgl_komentar = table.Column<DateTime>(type: "datetime", nullable: false),
                     isi_komentar = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
@@ -105,7 +123,7 @@ namespace API.Migrations
                     nm_bahan = table.Column<string>(type: "varchar(255)", nullable: false),
                     jumlah = table.Column<string>(type: "varchar(50)", nullable: false),
                     satuan = table.Column<string>(type: "varchar(50)", nullable: false),
-                    id_resep = table.Column<string>(type: "char(5)", nullable: false)
+                    id_resep = table.Column<string>(type: "char(5)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,10 +152,14 @@ namespace API.Migrations
                 column: "id_resep");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tb_m_user_roles_role_id",
+                table: "tb_m_user_roles",
+                column: "role_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tb_m_user_roles_user_id",
                 table: "tb_m_user_roles",
-                column: "user_id",
-                unique: true);
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_recipe_user_id",
@@ -159,6 +181,9 @@ namespace API.Migrations
 
             migrationBuilder.DropTable(
                 name: "tb_recipe");
+
+            migrationBuilder.DropTable(
+                name: "tb_m_roles");
 
             migrationBuilder.DropTable(
                 name: "tb_user");

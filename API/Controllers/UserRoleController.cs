@@ -8,9 +8,9 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentController : GeneralController<ICommentRepository, Comment, string>
+    public class UserRoleController : GeneralController<IUserRoleRepository, UserRole, int>
     {
-        public CommentController(ICommentRepository repository) : base(repository)
+        public UserRoleController(IUserRoleRepository repository) : base(repository)
         {
         }
     }

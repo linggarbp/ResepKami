@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20230623081257_DatabaseAPI")]
+    [Migration("20230624031852_DatabaseAPI")]
     partial class DatabaseAPI
     {
         /// <inheritdoc />
@@ -46,7 +46,6 @@ namespace API.Migrations
                         .HasColumnName("id_recipe");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("char(5)")
                         .HasColumnName("user_id");
 
@@ -71,7 +70,6 @@ namespace API.Migrations
                         .HasColumnName("nm_bahan");
 
                     b.Property<string>("RecipeId")
-                        .IsRequired()
                         .HasColumnType("char(5)")
                         .HasColumnName("id_resep");
 
@@ -129,7 +127,6 @@ namespace API.Migrations
                         .HasColumnName("langkah");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("char(5)")
                         .HasColumnName("user_id");
 
@@ -138,6 +135,25 @@ namespace API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("tb_recipe");
+                });
+
+            modelBuilder.Entity("API.Models.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tb_m_roles");
                 });
 
             modelBuilder.Entity("API.Models.User", b =>
@@ -155,11 +171,6 @@ namespace API.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)")
                         .HasColumnName("password");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("role_id");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -180,20 +191,19 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("name");
+                    b.Property<int?>("RoleId")
+                        .HasColumnType("int")
+                        .HasColumnName("role_id");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("char(5)")
                         .HasColumnName("user_id");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("RoleId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("tb_m_user_roles");
                 });
@@ -209,8 +219,7 @@ namespace API.Migrations
                     b.HasOne("API.Models.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Recipe");
 
@@ -222,8 +231,7 @@ namespace API.Migrations
                     b.HasOne("API.Models.Recipe", "Recipe")
                         .WithMany("Ingredients")
                         .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Recipe");
                 });
@@ -233,19 +241,24 @@ namespace API.Migrations
                     b.HasOne("API.Models.User", "User")
                         .WithMany("Recipes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("API.Models.UserRole", b =>
                 {
+                    b.HasOne("API.Models.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("API.Models.User", "User")
-                        .WithOne("UserRole")
-                        .HasForeignKey("API.Models.UserRole", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Role");
 
                     b.Navigation("User");
                 });
@@ -255,13 +268,18 @@ namespace API.Migrations
                     b.Navigation("Ingredients");
                 });
 
+            modelBuilder.Entity("API.Models.Role", b =>
+                {
+                    b.Navigation("UserRoles");
+                });
+
             modelBuilder.Entity("API.Models.User", b =>
                 {
                     b.Navigation("Comments");
 
                     b.Navigation("Recipes");
 
-                    b.Navigation("UserRole");
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }
