@@ -1,0 +1,157 @@
+﻿@model IEnumerable<Client.Models.Recipe>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Daftar Resep</h1>
+
+<p>
+    <a class="bi bi-plus" asp-action="Create">Create New</a>
+</p>
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecipeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Step)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrepareTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CookingTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Difficulty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecipeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Step)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrepareTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CookingTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Difficulty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>*@
+
+@foreach (var item in Model)
+{
+    <!-- Carousel wrapper -->
+<div id="carouselMultiItemExample"
+     class="carousel slide carousel-dark text-center"
+     data-mdb-ride="carousel">
+    <!-- Inner -->
+    <div class="carousel-inner py-4">
+        <!-- Single item -->
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/181.webp"
+                                    class="card-img-top"
+                                    alt="Waterfall" />
+                            <div class="card-body">
+                                <h5 class="card-title">@Html.DisplayFor(modelItem => item.RecipeName)</h5>
+                                <p class="card-text">
+                                    @Html.DisplayFor(modelitem => item.Description)
+                                </p>
+                                <div class="btn btn-outline-primary" data-toogle="modal" data-target="#exampleModalCenter">
+                                    @Html.ActionLink("Resep", "Details", new {  id=item.Id  })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Inner -->
+    <!-- Controls -->
+    @*<div class="d-flex justify-content-center mb-4">
+        <button class="carousel-control-prev position-relative"
+                type="button"
+                data-mdb-target="#carouselMultiItemExample"
+                data-mdb-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next position-relative"
+                type="button"
+                data-mdb-target="#carouselMultiItemExample"
+                data-mdb-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>*@
+    <!-- Controls -->
+</div>
+<!-- Carousel wrapper -->
+}
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal top fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog modal-lg  modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

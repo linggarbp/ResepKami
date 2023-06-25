@@ -1,7 +1,15 @@
+using Client.Repositories;
+using Client.Repositories.Data;
+using Client.Repositories.Interface;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped(typeof(IGeneralRepository<,>), typeof(GeneralRepository<,>));
+//builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 
 var app = builder.Build();
 
