@@ -22,70 +22,6 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("API.Models.Comment", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(100)")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CommentDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("tgl_komentar");
-
-                    b.Property<string>("ContentComment")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("isi_komentar");
-
-                    b.Property<string>("RecipeId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("id_recipe");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("tb_comment");
-                });
-
-            modelBuilder.Entity("API.Models.Ingredient", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("id_bahan");
-
-                    b.Property<string>("IngredientName")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("nm_bahan");
-
-                    b.Property<string>("RecipeId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("id_resep");
-
-                    b.Property<string>("Total")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("jumlah");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("tb_ingredient");
-                });
-
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Property<string>("Id")
@@ -108,6 +44,11 @@ namespace API.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("kesulitan");
 
+                    b.Property<string>("IngredientName")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("nm_bahan");
+
                     b.Property<string>("RecipeName")
                         .IsRequired()
                         .HasColumnType("varchar(100)")
@@ -118,10 +59,20 @@ namespace API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("langkah");
 
+                    b.Property<string>("Total")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("jumlah");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("char(5)")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("username");
 
                     b.HasKey("Id");
 
@@ -158,7 +109,7 @@ namespace API.Migrations
                     b.HasIndex("RecipeId")
                         .IsUnique();
 
-                    b.ToTable("Requests");
+                    b.ToTable("tb_request");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
@@ -233,34 +184,6 @@ namespace API.Migrations
                     b.ToTable("tb_m_user_roles");
                 });
 
-            modelBuilder.Entity("API.Models.Comment", b =>
-                {
-                    b.HasOne("API.Models.Recipe", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("API.Models.Ingredient", b =>
-                {
-                    b.HasOne("API.Models.Recipe", "Recipe")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.HasOne("API.Models.User", "User")
@@ -300,8 +223,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
-                    b.Navigation("Ingredients");
-
                     b.Navigation("Request");
                 });
 
@@ -312,8 +233,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Recipes");
 
                     b.Navigation("UserRoles");

@@ -25,8 +25,4 @@ public class User
     
     [JsonIgnore]
     public ICollection<Recipe>? Recipes { get; set; }
-
-    [JsonIgnore]
-    public ICollection<Comment>? Comments { get; set; }
-
 }

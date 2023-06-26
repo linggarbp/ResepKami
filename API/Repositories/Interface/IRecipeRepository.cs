@@ -6,5 +6,6 @@ namespace API.Repositories.Interface
     public interface IRecipeRepository : IGeneralRepository<Recipe, int>
     {
         int Recipe(RecipeVM recipeVM);
+        //IEnumerable<int> GetRequestByRecipeId(int recipeId);
     }
 }

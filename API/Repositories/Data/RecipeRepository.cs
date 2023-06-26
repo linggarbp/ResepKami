@@ -21,6 +21,8 @@ public class RecipeRepository : GeneralRepository<Recipe, int, MyContext>, IReci
             Id = recipeVM.Id,
             RecipeName = recipeVM.RecipeName,
             Description = recipeVM.Description,
+            IngredientName = recipeVM.IngredientName,
+            Total = recipeVM.Total,
             Step = recipeVM.Step,
             CookingTime = recipeVM.CookingTime,
             Difficulty = recipeVM.Difficulty
@@ -40,4 +42,12 @@ public class RecipeRepository : GeneralRepository<Recipe, int, MyContext>, IReci
 
         return result;
     }
+
+    //public IEnumerable<int> GetRequestByRecipeId(int recipeId)
+    //{
+    //    var Id = _context.Recipes.FirstOrDefault(e => e.Id == recipeId)!.Id;
+    //    var request = _context.Requests.Where(ur => ur.RecipeId == Id)
+    //                                   .Select(role => role.RecipeId);
+    //    return request;
+    //}
 }

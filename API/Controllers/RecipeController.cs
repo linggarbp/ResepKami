@@ -11,14 +11,15 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    
     public class RecipeController : GeneralController<IRecipeRepository, Recipe, int>
     {
         public RecipeController(IRecipeRepository repository) : base(repository)
         {
         }
 
-        [HttpPost("Recipe")]
+        [Authorize]
+        [HttpPost("AddRecipe")]
         public ActionResult Recipe(RecipeVM recipeVM)
         {
             var recipe = _repository.Recipe(recipeVM);
