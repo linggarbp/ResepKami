@@ -4,7 +4,7 @@ using API.Repositories.Interface;
 
 namespace API.Repositories.Data;
 
-public class IngredientRepository : GeneralRepository<Ingredient, string, MyContext>, IIngredientRepository
+public class IngredientRepository : GeneralRepository<Ingredient, int, MyContext>, IIngredientRepository
 {
     public IngredientRepository(MyContext context) : base(context)
     {

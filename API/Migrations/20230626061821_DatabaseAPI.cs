@@ -72,10 +72,9 @@ namespace API.Migrations
                     nm_resep = table.Column<string>(type: "varchar(100)", nullable: false),
                     deskripsi = table.Column<string>(type: "varchar(255)", nullable: false),
                     langkah = table.Column<string>(type: "varchar(255)", nullable: false),
-                    wkt_persiapan = table.Column<string>(type: "varchar(20)", nullable: false),
                     wkt_memasak = table.Column<string>(type: "varchar(20)", nullable: false),
                     kesulitan = table.Column<string>(type: "varchar(20)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: true)
+                    user_id = table.Column<string>(type: "char(5)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,12 +88,33 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Requests",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    recipe_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    is_approved = table.Column<bool>(type: "bit", nullable: false),
+                    recipe_id = table.Column<string>(type: "char(5)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Requests", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Requests_tb_recipe_recipe_id",
+                        column: x => x.recipe_id,
+                        principalTable: "tb_recipe",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tb_comment",
                 columns: table => new
                 {
                     id = table.Column<string>(type: "char(100)", nullable: false),
                     id_recipe = table.Column<string>(type: "char(5)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: true),
+                    user_id = table.Column<string>(type: "char(5)", nullable: false),
                     tgl_komentar = table.Column<DateTime>(type: "datetime", nullable: false),
                     isi_komentar = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
@@ -122,8 +142,7 @@ namespace API.Migrations
                     id_bahan = table.Column<string>(type: "char(5)", nullable: false),
                     nm_bahan = table.Column<string>(type: "varchar(255)", nullable: false),
                     jumlah = table.Column<string>(type: "varchar(50)", nullable: false),
-                    satuan = table.Column<string>(type: "varchar(50)", nullable: false),
-                    id_resep = table.Column<string>(type: "char(5)", nullable: true)
+                    id_resep = table.Column<string>(type: "char(5)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -135,6 +154,12 @@ namespace API.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Requests_recipe_id",
+                table: "Requests",
+                column: "recipe_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_comment_id_recipe",
@@ -170,6 +195,9 @@ namespace API.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Requests");
+
             migrationBuilder.DropTable(
                 name: "tb_comment");
 

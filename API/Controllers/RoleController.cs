@@ -10,9 +10,9 @@ namespace API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CommentController : GeneralController<ICommentRepository, Comment, int>
+    public class RoleController : GeneralController<IRoleRepository, Role, int>
     {
-        public CommentController(ICommentRepository repository) : base(repository)
+        public RoleController(IRoleRepository repository) : base(repository)
         {
         }
     }

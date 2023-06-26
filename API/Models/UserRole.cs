@@ -11,7 +11,7 @@ public class UserRole
     [Key, Column("id")]
     public int Id { get; set; }
     [Column("user_id", TypeName = "char(5)")]
-    public string? UserId { get; set; }
+    public int? UserId { get; set; }
     
     [Column("role_id")]
     public int? RoleId { get; set; }

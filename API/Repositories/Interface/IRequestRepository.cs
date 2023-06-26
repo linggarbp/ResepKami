@@ -2,7 +2,7 @@
 
 namespace API.Repositories.Interface
 {
-    public interface ICommentRepository : IGeneralRepository<Comment, int>
+    public interface IRequestRepository : IGeneralRepository<Request, int>
     {
     }
 }

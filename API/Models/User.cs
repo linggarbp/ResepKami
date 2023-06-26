@@ -7,19 +7,15 @@ namespace API.Models;
 [Table("tb_user")]
 public class User
 {
-    // user id
     [Key, Column("id", TypeName = "char(5)")]
-    public string Id { get; set; }
+    public int Id { get; set; }
 
-    // user name
     [Column("username", TypeName = "varchar(50)")]
     public string UserName { get; set; }
 
-    // user email
     [Column("email", TypeName = "varchar(50)")]
     public string Email { get; set; }
 
-    // user password
     [Column("password", TypeName = "varchar(255)")]
     public string Password { get; set; }
 

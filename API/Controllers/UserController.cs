@@ -13,7 +13,8 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : GeneralController<IUserRepository, User, string>
+    [AllowAnonymous]
+    public class UserController : GeneralController<IUserRepository, User, int>
     {
         private readonly ITokenService _tokenService;
         //private readonly IUserRepository _userRepository;
@@ -26,7 +27,6 @@ namespace API.Controllers
             _userRoleRepository = userRoleRepository;
         }
 
-        [AllowAnonymous]
         [HttpPost("Register")]
         public ActionResult Register(RegisterVM registerVM)
         {
@@ -48,7 +48,6 @@ namespace API.Controllers
             });
         }
 
-        [AllowAnonymous]
         [HttpPost("Login")]
         public ActionResult Login(LoginVM loginVM)
         {

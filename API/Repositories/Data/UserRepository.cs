@@ -6,7 +6,7 @@ using API.ViewModels;
 
 namespace API.Repositories.Data
 {
-    public class UserRepository : GeneralRepository<User, string, MyContext>, IUserRepository
+    public class UserRepository : GeneralRepository<User, int, MyContext>, IUserRepository
     {
         public UserRepository(MyContext context) : base(context)
         {
@@ -47,11 +47,5 @@ namespace API.Repositories.Data
 
             return Hashing.ValidatePassword(loginVM.Password, getUser.Password);
         }
-
-        //public string GetUserNameByEmail(string email)
-        //{
-        //    var userName = _context.Users.FirstOrDefault(u => u.Email == email);
-        //    return userName.UserName;
-        //}
     }
 }

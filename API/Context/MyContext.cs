@@ -10,6 +10,7 @@ public class MyContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
+    public DbSet<Request> Requests { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
     public DbSet<Comment> Comments { get; set; }
 
@@ -39,6 +40,14 @@ public class MyContext : DbContext
                     .WithOne(u => u.User)
                     .IsRequired(false)
                     .HasForeignKey(c => c.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+        //One Recipe has one Request
+        modelBuilder.Entity<Recipe>()
+                    .HasOne(r => r.Request)
+                    .WithOne(r => r.Recipe)
+                    .IsRequired(false)
+                    .HasForeignKey<Request>(r => r.RecipeId)
                     .OnDelete(DeleteBehavior.Restrict);
 
         //One User has many UserRole

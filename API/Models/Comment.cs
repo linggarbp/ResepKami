@@ -6,23 +6,18 @@ namespace API.Models;
 [Table("tb_comment")]
 public class Comment
 {
-    // id
     [Key, Column("id", TypeName = "char(100)")]
-    public string Id { get; set; }
+    public int Id { get; set; }
 
-    // id resep (FK)
     [Column("id_recipe", TypeName = "char(5)")]
-    public string RecipeId { get; set; }
+    public int RecipeId { get; set; }
 
-    // id pengguna (FK)
     [Column("user_id", TypeName = "char(5)")]
-    public string UserId { get; set; }
+    public int UserId { get; set; }
 
-    // tanggal komentar
     [Column("tgl_komentar", TypeName = "datetime")]
     public DateTime CommentDate { get; set; }
 
-    // isi komentar
     [Column("isi_komentar", TypeName = "varchar(255)")]
     public string ContentComment { get; set; }
 
