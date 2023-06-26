@@ -13,7 +13,7 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class UserController : GeneralController<IUserRepository, User, int>
     {
         private readonly ITokenService _tokenService;
