@@ -8,6 +8,6 @@ public interface IGeneralRepository<TEntity, TKey>
     Task<ResponseListVM<TEntity>> Get();
     Task<ResponseViewModel<TEntity>> Get(TKey id);
     Task<ResponseMessageVM> Post(TEntity entity);
-    Task<ResponseMessageVM> Put(TEntity entity, TKey id);
+    Task<ResponseMessageVM> Put(TKey id, TEntity entity);
     Task<ResponseMessageVM> Delete(TKey id);
 }

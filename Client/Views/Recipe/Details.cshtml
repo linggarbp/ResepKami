@@ -1,0 +1,117 @@
+﻿@model Client.Models.Recipe
+
+@{
+    ViewData["Title"] = "Details";
+}
+@*
+<div class="heading">
+<h1 class="text-center">
+    @Html.DisplayFor(model => model.RecipeName)
+</h1>
+<hr />
+</div>
+
+<div class="description">
+    <p class="blockquote text-center">
+        @Html.DisplayFor(model => model.Description)
+    </p>
+</div>
+
+<div class="icon">
+
+    <ul class="c-recipe-attributes__list">
+        <li class="c-recipe-attributes__list-item">
+            <p class="c-recipe-attributes__label">Waktu persiapan</p>
+            <div class="c-recipe-attributes-value">
+                <span style="background-image: url(/etc/ui/knorrv2/clientlibs/core/core/svgs/stack/svg/sprite.stack.svg#icon_clock)" class="c-recipe-attributes__value" data-attributename="preparationTime">@Html.DisplayFor(model => model.PrepareTime)</span>
+                <span class="c-recipe-attributes__suffix"></span>
+            </div>
+        </li>
+        <li class="c-recipe-attributes__list-item">
+            <p class="c-recipe-attributes__label">Waktu Masak</p>
+            <div class="c-recipe-attributes-value">
+                <span class="c-recipe-attributes__value" data-attributename="cookingTime">@Html.DisplayFor(model => model.CookingTime)</span>
+                <span class="c-recipe-attributes__suffix"></span>
+            </div>
+        </li>
+        <li class="c-recipe-attributes__list-item">
+            <p class="c-recipe-attributes__label">Tingkat Kesulitan</p>
+            <div class="c-recipe-attributes-value">
+                <span class="c-recipe-attributes__value" data-attributename="difficulties">@Html.DisplayFor(model => model.Difficulty)</span>
+                <span class="c-recipe-attributes__suffix"></span>
+            </div>
+        </li>
+    </ul>   
+</div>
+
+
+
+<div class="step">
+<h3>Langkah - langkah Pembuatan</h3>
+<p class="lead">
+    @Html.DisplayFor(model => model.Step)
+</p>
+</div>
+
+<div class="ingredients text-end">
+    <h3>Bahan - bahan</h3>
+
+</div>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |
+    @Html.ActionLink("Details", "Details", new {  id=Model.Id  })
+    @Html.ActionLink("Delete", "Delete", new {  id=Model.Id  })
+    <a asp-action="Index">Back to List</a>
+</div>
+*@
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="project-info-box mt-0">
+                <h2>@Html.DisplayFor(model => model.RecipeName)</h2>
+                <p class="mb-0 blockquote">
+                    @Html.DisplayFor(model => model.Description)
+                </p>
+                <br />
+            </div><!-- / project-info-box -->
+
+            <div class="project-info-box">
+                <h3>Bahan - bahan</h3>
+            </div><!-- / project-info-box -->
+
+            <div class="project-info-box mt-0 mb-0">
+                <ul class="c-recipe-attributes__list">
+                    <li class="c-recipe-attributes__list-item">
+                        <p class="c-recipe-attributes__label">Waktu persiapan</p>
+                        <i class="bi bi-clock"></i>
+                        <span class="c-recipe-attributes__value" data-attributename="preparationTime">@Html.DisplayFor(model => model.PrepareTime)</span>
+                    </li>
+                    <li class="c-recipe-attributes__list-item">
+                        <p class="c-recipe-attributes__label">Waktu Masak</p>
+                        <i class="bi bi-clock-history"></i>
+                        <span class="c-recipe-attributes__value" data-attributename="cookingTime">@Html.DisplayFor(model => model.CookingTime)</span>
+                    </li>
+                    <li class="c-recipe-attributes__list-item">
+                        <p class="c-recipe-attributes__label">Tingkat Kesulitan</p>
+                        <i class="bi bi-bar-chart"></i>
+                        <span class="c-recipe-attributes__value" data-attributename="difficulties">@Html.DisplayFor(model => model.Difficulty)</span>
+                    </li>
+                </ul>
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
+
+        <div class="col-md-7">
+            <img src="https://www.bootdey.com/image/400x300/FFB6C1/000000" alt="project-image" class="rounded">
+            <div class="project-info-box">
+                <h3>Langkah - langkah Pembuatan</h3>
+                <p class="lead">
+                    @Html.DisplayFor(model => model.Step)
+                </p>
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
+    </div>
+</div>
