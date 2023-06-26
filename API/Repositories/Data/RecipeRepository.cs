@@ -43,7 +43,7 @@ public class RecipeRepository : GeneralRepository<Recipe, int, MyContext>, IReci
         return result;
     }
 
-    //public IEnumerable<int> GetRequestByRecipeId(int recipeId)
+    //public IEnumerable<int> GetApproveRecipe(int recipeId)
     //{
     //    var Id = _context.Recipes.FirstOrDefault(e => e.Id == recipeId)!.Id;
     //    var request = _context.Requests.Where(ur => ur.RecipeId == Id)

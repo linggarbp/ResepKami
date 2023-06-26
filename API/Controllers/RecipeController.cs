@@ -14,9 +14,33 @@ namespace API.Controllers
     
     public class RecipeController : GeneralController<IRecipeRepository, Recipe, int>
     {
-        public RecipeController(IRecipeRepository repository) : base(repository)
+        //private readonly IRequestRepository _requestRepository;
+
+        public RecipeController(IRecipeRepository repository/*, IRequestRepository requestRepository*/) : base(repository)
         {
+            //_requestRepository = requestRepository;
         }
+
+        //[HttpGet]
+        //public ActionResult GetApproveRecipe()
+        //{
+        //    var results = _requestRepository.GetApproveRecipe();
+        //    if (results == null)
+        //        return NotFound(new ResponseErrorVM<string>
+        //        {
+        //            Code = StatusCodes.Status404NotFound,
+        //            Status = HttpStatusCode.NotFound.ToString(),
+        //            Errors = "Data not Found"
+        //        });
+
+        //    return Ok(new ResponseDataVM<IEnumerable<int>>
+        //    {
+        //        Code = StatusCodes.Status200OK,
+        //        Status = HttpStatusCode.OK.ToString(),
+        //        Message = "Success",
+        //        Data = results
+        //    });
+        //}
 
         [Authorize]
         [HttpPost("AddRecipe")]
