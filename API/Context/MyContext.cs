@@ -10,8 +10,7 @@ public class MyContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
-    public DbSet<Ingredient> Ingredients { get; set; }
-    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Request> Requests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -25,20 +24,12 @@ public class MyContext : DbContext
                     .HasForeignKey (r => r.UserId)
                     .OnDelete(DeleteBehavior.Restrict);
 
-        //One Recipe has many Ingredients
+        //One Request has one Recipe
         modelBuilder.Entity<Recipe>()
-                    .HasMany(i => i.Ingredients)
+                    .HasOne(r => r.Request)
                     .WithOne(r => r.Recipe)
                     .IsRequired(false)
-                    .HasForeignKey(r => r.RecipeId)
-                    .OnDelete(DeleteBehavior.Restrict);
-
-        //One User has many Comments
-        modelBuilder.Entity<User>()
-                    .HasMany(c => c.Comments)
-                    .WithOne(u => u.User)
-                    .IsRequired(false)
-                    .HasForeignKey(c => c.UserId)
+                    .HasForeignKey<Request>(r => r.RecipeId)
                     .OnDelete(DeleteBehavior.Restrict);
 
         //One User has many UserRole

@@ -63,6 +63,7 @@ public class GeneralController<TRepository, TEntity, TKey> : ControllerBase
         });
     }
 
+    [Authorize]
     [HttpPost]
     public ActionResult Insert(TEntity entity)
     {
@@ -83,6 +84,7 @@ public class GeneralController<TRepository, TEntity, TKey> : ControllerBase
         });
     }
 
+    [Authorize]
     [HttpPut]
     public ActionResult Update(TEntity entity)
     {
@@ -102,6 +104,7 @@ public class GeneralController<TRepository, TEntity, TKey> : ControllerBase
         });
     }
 
+    [Authorize]
     [HttpDelete("{key}")]
     public ActionResult Delete(TKey key)
     {

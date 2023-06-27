@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -69,13 +68,15 @@ namespace API.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "char(5)", nullable: false),
+                    user_id = table.Column<string>(type: "char(5)", nullable: false),
+                    username = table.Column<string>(type: "varchar(50)", nullable: false),
                     nm_resep = table.Column<string>(type: "varchar(100)", nullable: false),
                     deskripsi = table.Column<string>(type: "varchar(255)", nullable: false),
+                    nm_bahan = table.Column<string>(type: "varchar(255)", nullable: false),
+                    jumlah = table.Column<string>(type: "varchar(50)", nullable: false),
                     langkah = table.Column<string>(type: "varchar(255)", nullable: false),
-                    wkt_persiapan = table.Column<string>(type: "varchar(20)", nullable: false),
                     wkt_memasak = table.Column<string>(type: "varchar(20)", nullable: false),
-                    kesulitan = table.Column<string>(type: "varchar(20)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: true)
+                    kesulitan = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,67 +90,25 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_comment",
+                name: "tb_request",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "char(100)", nullable: false),
-                    id_recipe = table.Column<string>(type: "char(5)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: true),
-                    tgl_komentar = table.Column<DateTime>(type: "datetime", nullable: false),
-                    isi_komentar = table.Column<string>(type: "varchar(255)", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    recipe_id = table.Column<string>(type: "char(5)", nullable: false),
+                    recipe_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    is_approved = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_comment", x => x.id);
+                    table.PrimaryKey("PK_tb_request", x => x.id);
                     table.ForeignKey(
-                        name: "FK_tb_comment_tb_recipe_id_recipe",
-                        column: x => x.id_recipe,
-                        principalTable: "tb_recipe",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_tb_comment_tb_user_user_id",
-                        column: x => x.user_id,
-                        principalTable: "tb_user",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "tb_ingredient",
-                columns: table => new
-                {
-                    id_bahan = table.Column<string>(type: "char(5)", nullable: false),
-                    nm_bahan = table.Column<string>(type: "varchar(255)", nullable: false),
-                    jumlah = table.Column<string>(type: "varchar(50)", nullable: false),
-                    satuan = table.Column<string>(type: "varchar(50)", nullable: false),
-                    id_resep = table.Column<string>(type: "char(5)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_tb_ingredient", x => x.id_bahan);
-                    table.ForeignKey(
-                        name: "FK_tb_ingredient_tb_recipe_id_resep",
-                        column: x => x.id_resep,
+                        name: "FK_tb_request_tb_recipe_recipe_id",
+                        column: x => x.recipe_id,
                         principalTable: "tb_recipe",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_comment_id_recipe",
-                table: "tb_comment",
-                column: "id_recipe");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_comment_user_id",
-                table: "tb_comment",
-                column: "user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_ingredient_id_resep",
-                table: "tb_ingredient",
-                column: "id_resep");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_m_user_roles_role_id",
@@ -165,25 +124,28 @@ namespace API.Migrations
                 name: "IX_tb_recipe_user_id",
                 table: "tb_recipe",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tb_request_recipe_id",
+                table: "tb_request",
+                column: "recipe_id",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "tb_comment");
-
-            migrationBuilder.DropTable(
-                name: "tb_ingredient");
-
-            migrationBuilder.DropTable(
                 name: "tb_m_user_roles");
 
             migrationBuilder.DropTable(
-                name: "tb_recipe");
+                name: "tb_request");
 
             migrationBuilder.DropTable(
                 name: "tb_m_roles");
+
+            migrationBuilder.DropTable(
+                name: "tb_recipe");
 
             migrationBuilder.DropTable(
                 name: "tb_user");

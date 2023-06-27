@@ -1,6 +1,7 @@
 ﻿using API.Base;
 using API.Models;
 using API.Repositories.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,10 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentController : GeneralController<ICommentRepository, Comment, string>
+    [Authorize(Roles = "admin")]
+    public class RoleController : GeneralController<IRoleRepository, Role, int>
     {
-        public CommentController(ICommentRepository repository) : base(repository)
+        public RoleController(IRoleRepository repository) : base(repository)
         {
         }
     }

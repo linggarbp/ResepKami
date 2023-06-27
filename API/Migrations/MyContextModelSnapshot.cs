@@ -22,74 +22,10 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("API.Models.Comment", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("char(100)")
-                        .HasColumnName("id");
-
-                    b.Property<DateTime>("CommentDate")
-                        .HasColumnType("datetime")
-                        .HasColumnName("tgl_komentar");
-
-                    b.Property<string>("ContentComment")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("isi_komentar");
-
-                    b.Property<string>("RecipeId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("id_recipe");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("char(5)")
-                        .HasColumnName("user_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("tb_comment");
-                });
-
-            modelBuilder.Entity("API.Models.Ingredient", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("char(5)")
-                        .HasColumnName("id_bahan");
-
-                    b.Property<string>("IngredientName")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)")
-                        .HasColumnName("nm_bahan");
-
-                    b.Property<string>("RecipeId")
-                        .HasColumnType("char(5)")
-                        .HasColumnName("id_resep");
-
-                    b.Property<string>("Total")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("jumlah");
-
-                    b.Property<string>("Unit")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("satuan");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("tb_ingredient");
-                });
-
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(5)")
                         .HasColumnName("id");
 
@@ -108,10 +44,10 @@ namespace API.Migrations
                         .HasColumnType("varchar(20)")
                         .HasColumnName("kesulitan");
 
-                    b.Property<string>("PrepareTime")
+                    b.Property<string>("IngredientName")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
-                        .HasColumnName("wkt_persiapan");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("nm_bahan");
 
                     b.Property<string>("RecipeName")
                         .IsRequired()
@@ -123,15 +59,57 @@ namespace API.Migrations
                         .HasColumnType("varchar(255)")
                         .HasColumnName("langkah");
 
+                    b.Property<string>("Total")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("jumlah");
+
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("char(5)")
                         .HasColumnName("user_id");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("username");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("tb_recipe");
+                });
+
+            modelBuilder.Entity("API.Models.Request", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_approved");
+
+                    b.Property<string>("RecipeId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("recipe_id");
+
+                    b.Property<string>("RecipeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("recipe_name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId")
+                        .IsUnique();
+
+                    b.ToTable("tb_request");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
@@ -156,6 +134,7 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.User", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(5)")
                         .HasColumnName("id");
 
@@ -205,34 +184,6 @@ namespace API.Migrations
                     b.ToTable("tb_m_user_roles");
                 });
 
-            modelBuilder.Entity("API.Models.Comment", b =>
-                {
-                    b.HasOne("API.Models.Recipe", "Recipe")
-                        .WithMany()
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Models.User", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("API.Models.Ingredient", b =>
-                {
-                    b.HasOne("API.Models.Recipe", "Recipe")
-                        .WithMany("Ingredients")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.HasOne("API.Models.User", "User")
@@ -241,6 +192,16 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("API.Models.Request", b =>
+                {
+                    b.HasOne("API.Models.Recipe", "Recipe")
+                        .WithOne("Request")
+                        .HasForeignKey("API.Models.Request", "RecipeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("API.Models.UserRole", b =>
@@ -262,7 +223,7 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
-                    b.Navigation("Ingredients");
+                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
@@ -272,8 +233,6 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.User", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Recipes");
 
                     b.Navigation("UserRoles");

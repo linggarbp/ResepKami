@@ -2,7 +2,7 @@
 
 namespace API.Repositories.Interface
 {
-    public interface IRoleRepository : IGeneralRepository<Role, string>
+    public interface IRoleRepository : IGeneralRepository<Role, int>
     {
     }
 }
