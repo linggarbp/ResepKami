@@ -42,7 +42,7 @@ namespace API.Controllers
         //    });
         //}
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("AddRecipe")]
         public ActionResult Recipe(RecipeVM recipeVM)
         {
