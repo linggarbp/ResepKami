@@ -1,4 +1,6 @@
-﻿using Client.Repositories.Interface;
+﻿using Client.Models;
+using Client.Repositories.Data;
+using Client.Repositories.Interface;
 using Client.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,27 +23,33 @@ namespace Client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginVM loginVM)
+        public async Task<IActionResult> Login(LoginVM login)
         {
-            var result = await repository.Login(loginVM);
+            var result = await repository.Login(login);
             if (result is null)
             {
                 return RedirectToAction("Error", "Home");
             }
-            else if (result.StatusCode == "409")
+            else if (result.Code == 409)
             {
                 ModelState.AddModelError(string.Empty, result.Message);
                 return View();
             }
-            else if (result.StatusCode == "200")
+            else if (result.Code == 200)
             {
                 HttpContext.Session.SetString("JWToken", result.Data);
                 return RedirectToAction("Index", "Home");
             }
             return View();
-
-
         }
+
+        [HttpGet("/Logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return Redirect("/Account/Login");
+        }
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -49,7 +57,7 @@ namespace Client.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
 

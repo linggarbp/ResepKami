@@ -2,7 +2,8 @@
 {
     public class ResponseViewModel<TEntity>
     {
-        public string StatusCode { get; set; }
+        public int Code { get; set; }
+        public string Status { get; set; }
         public string Message { get; set; }
         public TEntity Data { get; set; }
     }

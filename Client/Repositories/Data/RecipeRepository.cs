@@ -1,12 +1,13 @@
 ﻿using Client.Models;
 using Client.Repositories.Interface;
 using Client.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 
 namespace Client.Repositories.Data
 {
+    [Authorize]
     public class RecipeRepository : GeneralRepository<Recipe, int>, IRecipeRepository
     {
         private readonly HttpClient httpClient;

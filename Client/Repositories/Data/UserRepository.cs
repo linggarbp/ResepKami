@@ -2,30 +2,29 @@
 using Client.Repositories.Interface;
 using Client.ViewModels;
 using Newtonsoft.Json;
-using System.Security.Principal;
 using System.Text;
 
 namespace Client.Repositories.Data
 {
-    public class UserRepository : GeneralRepository<User, int>, IUserRepository
+    public class UserRepository : GeneralRepository<User, string>, IUserRepository
     {
-        private readonly HttpClient httpClient;
         private readonly string request;
+        private readonly HttpClient httpClient;
 
-        public UserRepository(string request = "Accounts/") : base(request)
+        public UserRepository(string request = "User/") : base(request)
         {
+            this.request = request;
             httpClient = new HttpClient
             {
                 BaseAddress = new Uri("https://localhost:7214/api/")
             };
-            this.request = request;
         }
 
         public async Task<ResponseViewModel<string>> Login(LoginVM entity)
         {
             ResponseViewModel<string> entityVM = null;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            using (var response = httpClient.PostAsync(request + "Login", content).Result)
+            using (var response = httpClient.PostAsync(request + "login", content).Result) //localhost/api/university {method:post} -> content
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entityVM = JsonConvert.DeserializeObject<ResponseViewModel<string>>(apiResponse);
