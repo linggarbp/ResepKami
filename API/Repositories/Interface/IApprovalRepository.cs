@@ -2,7 +2,7 @@
 
 namespace API.Repositories.Interface
 {
-    public interface IRequestRepository : IGeneralRepository<Request, int>
+    public interface IApprovalRepository : IGeneralRepository<Approval, int>
     {
         
     }

@@ -22,6 +22,37 @@ namespace API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("API.Models.Approval", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit")
+                        .HasColumnName("is_approved");
+
+                    b.Property<string>("RecipeId")
+                        .IsRequired()
+                        .HasColumnType("char(5)")
+                        .HasColumnName("recipe_id");
+
+                    b.Property<string>("RecipeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("recipe_name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipeId")
+                        .IsUnique();
+
+                    b.ToTable("tb_approval");
+                });
+
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Property<string>("Id")
@@ -66,37 +97,6 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tb_recipe");
-                });
-
-            modelBuilder.Entity("API.Models.Request", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsApproved")
-                        .HasColumnType("bit")
-                        .HasColumnName("is_approved");
-
-                    b.Property<string>("RecipeId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("recipe_id");
-
-                    b.Property<string>("RecipeName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("recipe_name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId")
-                        .IsUnique();
-
-                    b.ToTable("tb_request");
                 });
 
             modelBuilder.Entity("API.Models.Role", b =>
@@ -171,6 +171,16 @@ namespace API.Migrations
                     b.ToTable("tb_m_user_roles");
                 });
 
+            modelBuilder.Entity("API.Models.Approval", b =>
+                {
+                    b.HasOne("API.Models.Recipe", "Recipe")
+                        .WithOne("Request")
+                        .HasForeignKey("API.Models.Approval", "RecipeId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Recipe");
+                });
+
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.HasOne("API.Models.User", "User")
@@ -179,16 +189,6 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("API.Models.Request", b =>
-                {
-                    b.HasOne("API.Models.Recipe", "Recipe")
-                        .WithOne("Request")
-                        .HasForeignKey("API.Models.Request", "RecipeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Recipe");
                 });
 
             modelBuilder.Entity("API.Models.UserRole", b =>

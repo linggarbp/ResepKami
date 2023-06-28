@@ -10,7 +10,7 @@ public class MyContext : DbContext
     public DbSet<UserRole> UserRoles { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
-    public DbSet<Request> Requests { get; set; }
+    public DbSet<Approval> Requests { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -29,7 +29,7 @@ public class MyContext : DbContext
                     .HasOne(r => r.Request)
                     .WithOne(r => r.Recipe)
                     .IsRequired(false)
-                    .HasForeignKey<Request>(r => r.RecipeId)
+                    .HasForeignKey<Approval>(r => r.RecipeId)
                     .OnDelete(DeleteBehavior.Restrict);
 
         //One User has many UserRole

@@ -31,13 +31,13 @@ public class RecipeRepository : GeneralRepository<Recipe, int, MyContext>, IReci
         result += _context.SaveChanges();
 
         // Insert to Request Table
-        var request = new Request
+        var request = new Approval
         {
             RecipeId = recipeVM.Id,
             RecipeName = recipeVM.RecipeName,
             IsApproved = false
         };
-        _context.Set<Request>().Add(request);
+        _context.Set<Approval>().Add(request);
         result += _context.SaveChanges();
 
         return result;

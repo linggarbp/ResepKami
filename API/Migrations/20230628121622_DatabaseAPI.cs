@@ -88,7 +88,7 @@ namespace API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_request",
+                name: "tb_approval",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -99,14 +99,20 @@ namespace API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_request", x => x.id);
+                    table.PrimaryKey("PK_tb_approval", x => x.id);
                     table.ForeignKey(
-                        name: "FK_tb_request_tb_recipe_recipe_id",
+                        name: "FK_tb_approval_tb_recipe_recipe_id",
                         column: x => x.recipe_id,
                         principalTable: "tb_recipe",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tb_approval_recipe_id",
+                table: "tb_approval",
+                column: "recipe_id",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_m_user_roles_role_id",
@@ -117,28 +123,22 @@ namespace API.Migrations
                 name: "IX_tb_m_user_roles_user_id",
                 table: "tb_m_user_roles",
                 column: "user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_request_recipe_id",
-                table: "tb_request",
-                column: "recipe_id",
-                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "tb_approval");
+
+            migrationBuilder.DropTable(
                 name: "tb_m_user_roles");
 
             migrationBuilder.DropTable(
-                name: "tb_request");
+                name: "tb_recipe");
 
             migrationBuilder.DropTable(
                 name: "tb_m_roles");
-
-            migrationBuilder.DropTable(
-                name: "tb_recipe");
 
             migrationBuilder.DropTable(
                 name: "tb_user");

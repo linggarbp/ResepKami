@@ -4,12 +4,12 @@ using System.Text.Json.Serialization;
 
 namespace API.Models;
 
-[Table("tb_request")]
-public class Request
+[Table("tb_approval")]
+public class Approval
 {
     [Key, Column("id")]
     public int Id { get; set; }
-    
+
     [Column("recipe_id", TypeName = "char(5)")]
     public int RecipeId { get; set; }
 

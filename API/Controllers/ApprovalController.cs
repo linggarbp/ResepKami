@@ -12,10 +12,10 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "admin")]
-    public class RequestController : GeneralController<IRequestRepository, Request, int>
+    //[Authorize(Roles = "admin")]
+    public class ApprovalController : GeneralController<IApprovalRepository, Approval, int>
     {
-        public RequestController(IRequestRepository repository) : base(repository)
+        public ApprovalController(IApprovalRepository repository) : base(repository)
         {
         }
     }

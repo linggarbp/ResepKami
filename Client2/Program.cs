@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ApprovalRepository>();
 builder.Services.AddScoped<RecipeRepository>();
 builder.Services.AddScoped<UserRepository>();
 
@@ -53,6 +54,10 @@ app.UseStatusCodePages(async context => {
     if (response.StatusCode.Equals((int)HttpStatusCode.Unauthorized))
     {
         response.Redirect("/Unauthorized");
+    }
+    else if (response.StatusCode.Equals((int)HttpStatusCode.Forbidden))
+    {
+        response.Redirect("/Forbidden");
     }
 });
 

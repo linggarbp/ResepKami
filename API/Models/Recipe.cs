@@ -40,5 +40,5 @@ public class Recipe
     public User? User { get; set; }
 
     [JsonIgnore]
-    public Request? Request { get; set; }
+    public Approval? Request { get; set; }
 }

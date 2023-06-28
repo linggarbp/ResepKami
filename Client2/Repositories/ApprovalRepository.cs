@@ -6,12 +6,12 @@ using System.Text;
 
 namespace Client2.Repositories
 {
-    public class RequestRepository
+    public class ApprovalRepository
     {
         private readonly string request;
         private readonly HttpClient httpClient;
 
-        public RequestRepository(string request = "Recipe/")
+        public ApprovalRepository(string request = "Approval/")
         {
             this.request = request;
             httpClient = new HttpClient
@@ -20,21 +20,21 @@ namespace Client2.Repositories
             };
         }
 
-        public async Task<ResponseDataVM<List<Request>>> Get()
+        public async Task<ResponseDataVM<List<Approval>>> Get()
         {
-            ResponseDataVM<List<Request>> entityVM = null;
+            ResponseDataVM<List<Approval>> entityVM = null;
             using (var response = await httpClient.GetAsync(request))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entityVM = JsonConvert.DeserializeObject<ResponseDataVM<List<Request>>>(apiResponse);
+                entityVM = JsonConvert.DeserializeObject<ResponseDataVM<List<Approval>>>(apiResponse);
             }
             return entityVM;
         }
 
-        public async Task<ResponseDataVM<string>> Put(int id, Request req)
+        public async Task<ResponseDataVM<string>> Put(int id, Approval approval)
         {
             ResponseDataVM<string> entityVM = null;
-            StringContent content = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(JsonConvert.SerializeObject(approval), Encoding.UTF8, "application/json");
             using (var response = httpClient.PutAsync(request, content).Result)
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
@@ -43,26 +43,26 @@ namespace Client2.Repositories
             return entityVM;
         }
 
-        public async Task<ResponseDataVM<Request>> Get(int id)
+        public async Task<ResponseDataVM<Approval>> Get(int id)
         {
-            ResponseDataVM<Request> entity = null;
+            ResponseDataVM<Approval> entity = null;
 
             using (var response = await httpClient.GetAsync(request + id))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entity = JsonConvert.DeserializeObject<ResponseDataVM<Request>>(apiResponse);
+                entity = JsonConvert.DeserializeObject<ResponseDataVM<Approval>>(apiResponse);
             }
             return entity;
         }
 
-        public async Task<ResponseDataVM<Request>> Delete(int id)
+        public async Task<ResponseDataVM<Approval>> Delete(int id)
         {
-            ResponseDataVM<Request> entity = null;
+            ResponseDataVM<Approval> entity = null;
 
             using (var response = await httpClient.DeleteAsync(request + id))
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
-                entity = JsonConvert.DeserializeObject<ResponseDataVM<Request>>(apiResponse);
+                entity = JsonConvert.DeserializeObject<ResponseDataVM<Approval>>(apiResponse);
             }
             return entity;
         }

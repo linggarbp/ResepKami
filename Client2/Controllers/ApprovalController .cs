@@ -5,12 +5,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers;
-[Authorize]
-public class RequestController : Controller
+[Authorize(Roles = "admin")]
+public class ApprovalController : Controller
 {
-    private readonly RequestRepository repository;
+    private readonly ApprovalRepository repository;
 
-    public RequestController(RequestRepository repository)
+    public ApprovalController(ApprovalRepository repository)
     {
         this.repository = repository;
     }
@@ -18,7 +18,7 @@ public class RequestController : Controller
     public async Task<IActionResult> Index()
     {
         var results = await repository.Get();
-        var requests = new List<Request>();
+        var requests = new List<Approval>();
 
         if (results != null)
         {
@@ -39,7 +39,7 @@ public class RequestController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var result = await repository.Get(id);
-        var request = new Request();
+        var request = new Approval();
 
         if (result.Data?.Id is null)
         {
@@ -58,11 +58,11 @@ public class RequestController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Request req)
+    public async Task<IActionResult> Edit(Approval approval)
     {
         if (ModelState.IsValid)
         {
-            var result = await repository.Put(req.Id, req);
+            var result = await repository.Put(approval.Id, approval);
             if (result.Code == 200)
             {
                 return RedirectToAction(nameof(Index));
@@ -97,7 +97,7 @@ public class RequestController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var university = await repository.Get(id);
-        return View("Delete", university?.Data);
+        var request = await repository.Get(id);
+        return View("Delete", request?.Data);
     }
 }

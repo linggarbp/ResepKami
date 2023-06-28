@@ -25,6 +25,13 @@ public class HomeController : Controller
     {
         return View("401");
     }
+    
+    [AllowAnonymous]
+    [HttpGet("/Forbidden")]
+    public IActionResult Forbidden()
+    {
+        return View("403");
+    }
 
     public IActionResult Privacy()
     {
