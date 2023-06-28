@@ -25,7 +25,6 @@ namespace API.Migrations
             modelBuilder.Entity("API.Models.Recipe", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(5)")
                         .HasColumnName("id");
 
@@ -64,19 +63,7 @@ namespace API.Migrations
                         .HasColumnType("varchar(50)")
                         .HasColumnName("jumlah");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("char(5)")
-                        .HasColumnName("user_id");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("username");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("tb_recipe");
                 });
@@ -188,7 +175,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.User", "User")
                         .WithMany("Recipes")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");

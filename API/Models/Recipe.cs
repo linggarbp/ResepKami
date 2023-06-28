@@ -8,11 +8,11 @@ public class Recipe
 {
     [Key, Column("id", TypeName = "char(5)")]
     public int Id { get; set; }
-    [Column("user_id", TypeName = "char(5)")]
-    public int UserId { get; set; }
+    //[Column("user_id", TypeName = "char(5)")]
+    //public int UserId { get; set; }
 
-    [Column("username", TypeName = "varchar(50)")]
-    public string UserName { get; set; }
+    //[Column("username", TypeName = "varchar(50)")]
+    //public string UserName { get; set; }
 
     [Column("nm_resep", TypeName = "varchar(100)")]
     public string RecipeName { get; set; }

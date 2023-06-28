@@ -2,7 +2,7 @@
 {
     public class ResponseListVM<TEntity>
     {
-        public string StatusCode { get; set; }
+        public int Code { get; set; }
         public string Message { get; set; }
         public List<TEntity>? Data { get; set; }
     }

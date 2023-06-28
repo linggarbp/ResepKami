@@ -6,8 +6,8 @@ namespace Client.Models;
 public class Recipe 
 {
     public int Id { get; set; }
-    public int UserId { get; set; }
-    public string UserName { get; set; }
+    //public int UserId { get; set; }
+    //public string UserName { get; set; }
     public string RecipeName { get; set; }
     public string Description { get; set; }
     public string IngredientName { get; set; }

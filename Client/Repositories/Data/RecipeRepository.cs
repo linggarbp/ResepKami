@@ -7,13 +7,13 @@ using System.Text;
 
 namespace Client.Repositories.Data
 {
-    [Authorize]
+    //[Authorize]
     public class RecipeRepository : GeneralRepository<Recipe, int>, IRecipeRepository
     {
         private readonly HttpClient httpClient;
         private readonly string request;
 
-        public RecipeRepository(string request = "Recipes/") : base(request)
+        public RecipeRepository(string request = "Recipe/") : base(request)
         {
             httpClient = new HttpClient
             {
@@ -26,7 +26,7 @@ namespace Client.Repositories.Data
         {
             ResponseMessageVM entityVM = null;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            using (var response = httpClient.PostAsync(request + "Recipe", content).Result)
+            using (var response = httpClient.PostAsync(request + "AddRecipe", content).Result)
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entityVM = JsonConvert.DeserializeObject<ResponseMessageVM>(apiResponse);

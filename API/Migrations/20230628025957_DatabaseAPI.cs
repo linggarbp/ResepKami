@@ -5,7 +5,7 @@
 namespace API.Migrations
 {
     /// <inheritdoc />
-    public partial class Database : Migration
+    public partial class DatabaseAPI : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,8 +68,6 @@ namespace API.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "char(5)", nullable: false),
-                    user_id = table.Column<string>(type: "char(5)", nullable: false),
-                    username = table.Column<string>(type: "varchar(50)", nullable: false),
                     nm_resep = table.Column<string>(type: "varchar(100)", nullable: false),
                     deskripsi = table.Column<string>(type: "varchar(255)", nullable: false),
                     nm_bahan = table.Column<string>(type: "varchar(255)", nullable: false),
@@ -82,8 +80,8 @@ namespace API.Migrations
                 {
                     table.PrimaryKey("PK_tb_recipe", x => x.id);
                     table.ForeignKey(
-                        name: "FK_tb_recipe_tb_user_user_id",
-                        column: x => x.user_id,
+                        name: "FK_tb_recipe_tb_user_id",
+                        column: x => x.id,
                         principalTable: "tb_user",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
@@ -118,11 +116,6 @@ namespace API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_tb_m_user_roles_user_id",
                 table: "tb_m_user_roles",
-                column: "user_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_recipe_user_id",
-                table: "tb_recipe",
                 column: "user_id");
 
             migrationBuilder.CreateIndex(

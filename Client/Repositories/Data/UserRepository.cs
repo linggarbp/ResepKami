@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Client.Repositories.Data
 {
-    public class UserRepository : GeneralRepository<User, string>, IUserRepository
+    public class UserRepository : GeneralRepository<User, int>, IUserRepository
     {
         private readonly string request;
         private readonly HttpClient httpClient;
@@ -24,7 +24,7 @@ namespace Client.Repositories.Data
         {
             ResponseViewModel<string> entityVM = null;
             StringContent content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
-            using (var response = httpClient.PostAsync(request + "login", content).Result) //localhost/api/university {method:post} -> content
+            using (var response = httpClient.PostAsync(request + "Login", content).Result)
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entityVM = JsonConvert.DeserializeObject<ResponseViewModel<string>>(apiResponse);

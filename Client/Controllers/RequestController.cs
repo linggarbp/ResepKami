@@ -38,12 +38,12 @@ namespace Client.Controllers
             if (ModelState.IsValid)
             {
                 var result = await repository.Post(request);
-                if (result.StatusCode == "200")
+                if (result.Code == 200)
                 {
                     TempData["Success"] = "Data berhasil masuk";
                     return RedirectToAction(nameof(Index));
                 }
-                else if (result.StatusCode == "409")
+                else if (result.Code == 409)
                 {
                     ModelState.AddModelError(string.Empty, result.Message);
                     return View();
@@ -85,12 +85,12 @@ namespace Client.Controllers
         public async Task<IActionResult> Edit(Request request, int id)
         {
             var result = await repository.Put(request, id);
-            if (result.StatusCode == "200")
+            if (result.Code == 200)
             {
                 TempData["Success"] = "Data berhasil diubah";
                 return RedirectToAction(nameof(Index));
             }
-            else if (result.StatusCode == "404")
+            else if (result.Code == 404)
             {
                 TempData["Success"] = "Data tidak ditemukan";
                 return RedirectToAction(nameof(Index));
@@ -126,12 +126,12 @@ namespace Client.Controllers
         public async Task<IActionResult> Delete(int id, Request request)
         {
             var result = await repository.Delete(id);
-            if (result.StatusCode == "200")
+            if (result.Code == 200)
             {
                 TempData["Success"] = "Data berhasil dihapus";
                 return RedirectToAction(nameof(Index));
             }
-            else if (result.StatusCode == "404")
+            else if (result.Code == 404)
             {
                 TempData["Success"] = "Data tidak ditemukan";
                 return RedirectToAction(nameof(Index));

@@ -2,6 +2,7 @@
 using Client.Repositories.Data;
 using Client.Repositories.Interface;
 using Client.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers
@@ -21,8 +22,9 @@ namespace Client.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginVM login)
         {
             var result = await repository.Login(login);
@@ -47,7 +49,7 @@ namespace Client.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return Redirect("/Account/Login");
+            return Redirect("/User/Login");
         }
 
         [HttpGet]
@@ -56,6 +58,7 @@ namespace Client.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM registerVM)
@@ -66,16 +69,16 @@ namespace Client.Controllers
             {
                 return RedirectToAction("Error", "Home");
             }
-            else if (result.StatusCode == "409")
+            else if (result.Code == 409)
             {
                 ModelState.AddModelError(string.Empty, result.Message);
                 TempData["Error"] = $"Something Went Wrong! - {result.Message}!";
                 return View();
             }
-            else if (result.StatusCode == "200")
+            else if (result.Code == 200)
             {
                 TempData["Success"] = $"Data has been Successfully Registered! - {result.Message}!";
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Login", "User");
             }
             return View();
         }

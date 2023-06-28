@@ -21,7 +21,7 @@ public class MyContext : DbContext
                     .HasMany(r => r.Recipes)
                     .WithOne(u => u.User)
                     .IsRequired(false)
-                    .HasForeignKey (r => r.UserId)
+                    .HasForeignKey (r => r.Id)
                     .OnDelete(DeleteBehavior.Restrict);
 
         //One Request has one Recipe

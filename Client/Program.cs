@@ -5,6 +5,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using API.Context;
+using API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,17 +23,6 @@ builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
-
-//Configure CORS
-//builder.Services.AddCors(options =>
-//{
-//    options.AddDefaultPolicy(policy =>
-//    {
-//        policy.AllowAnyOrigin();
-//        policy.AllowAnyMethod();
-//        policy.AllowAnyHeader();
-//    });
-//});
 
 //Configure JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -64,21 +57,22 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Custome Error page
-app.UseStatusCodePages(async context => {
+//Custom Error page
+app.UseStatusCodePages(async context =>
+{
     var response = context.HttpContext.Response;
 
     if (response.StatusCode.Equals((int)HttpStatusCode.Unauthorized))
     {
-        response.Redirect("/unauthorized");
+        response.Redirect("/Unauthorized");
     }
     else if (response.StatusCode.Equals((int)HttpStatusCode.NotFound))
     {
-        response.Redirect("/notfound");
+        response.Redirect("/NotFound");
     }
     else if (response.StatusCode.Equals((int)HttpStatusCode.Forbidden))
     {
-        response.Redirect("/forbidden");
+        response.Redirect("/Forbidden");
     }
 });
 app.UseSession();
