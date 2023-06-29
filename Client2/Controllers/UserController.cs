@@ -39,21 +39,21 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public IActionResult SignIn()
+    public IActionResult Register()
     {
         return View();
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> SignIn(User user)
+    public async Task<IActionResult> Register(User user)
     {
 
         var result = await repository.Post(user);
         if (result.Code == 200)
         {
             TempData["Success"] = "Insert Data Success";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("login", "user");
         }
         else if (result.Code == 409)
         {

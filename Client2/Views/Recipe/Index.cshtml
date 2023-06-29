@@ -4,11 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="d-flex align-items-center justify-content-center">
+    <h1 class="d-flex align-items-center">Daftar Resep</h1>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <!-- Carousel wrapper -->
 <div id="carouselMultiItemExample"
      class="carousel slide carousel-dark text-center"
@@ -34,8 +33,6 @@
                                     <div class="btn btn-outline-primary" data-toogle="modal" data-target="#exampleModalCenter">
                                         @Html.ActionLink("Resep", "Details", new {  id=item.Id  })
                                     </div>
-                                    @*                                    <a href="#!" class="btn btn-primary">Button</a>
-                                *@
                                 </div>
                             </div>
                         </div>
@@ -47,36 +44,15 @@
     <!-- Inner -->
 </div>
 <!-- Carousel wrapper -->
+
+@if (User.IsInRole("admin"))
+{
+    <div class="d-flex align-items-center justify-content-center">
+        <a class="btn btn-outline-primary btn-rounded btn-floating" href="~/Recipe/Create/" role="button"><i class="fas fa-plus"></i></a>
+    </div>
+}
+
 @*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RecipeName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IngredientName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Step)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CookingTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Difficulty)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>

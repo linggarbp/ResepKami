@@ -4,10 +4,58 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div class="d-flex align-items-center justify-content-start">
+    <h1 class="d-flex align-items-center">Detail Resep</h1><br />
+    <h3 class="d-flex align-items-center">
+    @Html.DisplayFor(model => model.RecipeName)
+    </h3>
 
-<div>
-    <h4>Recipe</h4>
+</div>
+<!--  -->
+<div class="container">
+<!-- image -->
+    <div class="row gx-1 ">
+        <div class="col-12">
+        </div>
+    </div>
+
+<!-- description -->
+    <div class="row gx-1 ">
+        <div class="col-12">
+            @Html.DisplayFor(model => model.Description)
+        </div>
+    </div>
+
+<!-- other -->
+    <div class="row gx-1 ">
+        <div class="col-12">
+            <i class="far fa-clock">
+                @Html.DisplayFor(model => model.CookingTime)
+            </i>
+            <i class="fas fa-utensils">
+                @Html.DisplayFor(model => model.Total)
+            </i>
+            @Html.DisplayFor(model => model.Difficulty)
+
+        </div>
+    </div>
+
+    <div class="row gx-1 ">
+    <!-- ingredients -->
+        <div class="col-md-6">
+            @Html.DisplayFor(model => model.IngredientName)
+
+        </div>
+
+    <!-- step -->
+        <div class="col-md-6">
+            @Html.DisplayFor(model => model.Step)
+
+        </div>
+    </div>
+</div>
+
+@*<div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -63,4 +111,4 @@
 <div>
     @Html.ActionLink("Edit", "Edit", new {  id = Model.Id  }) |
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
