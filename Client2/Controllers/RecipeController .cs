@@ -18,14 +18,14 @@ public class RecipeController : Controller
     public async Task<IActionResult> Index()
     {
         var Results = await repository.Get();
-        var universities = new List<Recipe>();
+        var recipes = new List<Recipe>();
 
         if (Results != null)
         {
-            universities = Results.Data.ToList();
+            recipes = Results.Data.ToList();
         }
 
-        return View(universities);
+        return View(recipes);
     }
 
     [HttpGet]
@@ -110,9 +110,9 @@ public class RecipeController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var result = await repository.Get(id);
-        var university = result?.Data;
+        var recipe = result?.Data;
 
-        return View(university);
+        return View(recipe);
     }
 
     [HttpPost]
@@ -126,7 +126,7 @@ public class RecipeController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        var university = await repository.Get(id);
-        return View("Delete", university?.Data);
+        var recipe = await repository.Get(id);
+        return View("Delete", recipe?.Data);
     }
 }

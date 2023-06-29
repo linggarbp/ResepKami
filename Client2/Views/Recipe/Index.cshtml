@@ -9,7 +9,45 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<!-- Carousel wrapper -->
+<div id="carouselMultiItemExample"
+     class="carousel slide carousel-dark text-center"
+     data-mdb-ride="carousel">
+    <!-- Inner -->
+    <div class="carousel-inner py-4">
+        <!-- Single item -->
+        <div class="carousel-item active">
+            <div class="container">
+                <div class="row">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-lg-4 d-none d-lg-block">
+                            <div class="card">
+                                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+                                     class="card-img-top"
+                                     alt="resepimage" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.RecipeName)</h5>
+                                    <p class="card-text">
+                                        @Html.DisplayFor(modelitem => item.Description)
+                                    </p>
+                                    <div class="btn btn-outline-primary" data-toogle="modal" data-target="#exampleModalCenter">
+                                        @Html.ActionLink("Resep", "Details", new {  id=item.Id  })
+                                    </div>
+                                    @*                                    <a href="#!" class="btn btn-primary">Button</a>
+                                *@
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Inner -->
+</div>
+<!-- Carousel wrapper -->
+@*<table class="table">
     <thead>
         <tr>
             <th>
@@ -75,3 +113,4 @@
 }
     </tbody>
 </table>
+*@
