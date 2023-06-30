@@ -4,63 +4,74 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Recipe</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RecipeName" class="control-label"></label>
-                <input asp-for="RecipeName" class="form-control" />
-                <span asp-validation-for="RecipeName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IngredientName" class="control-label"></label>
-                <input asp-for="IngredientName" class="form-control" />
-                <span asp-validation-for="IngredientName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Total" class="control-label"></label>
-                <input asp-for="Total" class="form-control" />
-                <span asp-validation-for="Total" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Step" class="control-label"></label>
-                <input asp-for="Step" class="form-control" />
-                <span asp-validation-for="Step" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CookingTime" class="control-label"></label>
-                <input asp-for="CookingTime" class="form-control" />
-                <span asp-validation-for="CookingTime" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Difficulty" class="control-label"></label>
-                <input asp-for="Difficulty" class="form-control" />
-                <span asp-validation-for="Difficulty" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div class="text-white">
+    <a class="btn btn-outline-dark btn-rounded btn-floating btn-lg" href="~/Recipe/Index/" role="button"><i class="fas fa-arrow-left"></i></a>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="container-fluid px-1 py-5 mx-auto">
+    <div class="row d-flex justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+            <h3>Create Recipe</h3>
+            <div class="card">
+                <form asp-action="Create" class="form-card">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label asp-for="Id" class="form-control-label px-3">ID</label>
+                            <input asp-for="Id" type="text">
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label asp-for="RecipeName" class="form-control-label px-3">Name</label>
+                            <input asp-for="RecipeName" type="text">
+                            <span asp-validation-for="RecipeName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label asp-for="IngredientName" class="form-control-label px-3">Ingredient</label>
+                            <input asp-for="IngredientName" type="text">
+                            <span asp-validation-for="IngredientName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label asp-for="Step" class="form-control-label px-3">Step</label>
+                            <input asp-for="Step" type="text">
+                            <span asp-validation-for="Step" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-4 flex-column d-flex">
+                            <label asp-for="Total" class="form-control-label px-3">Total</label>
+                            <input asp-for="Total" type="text">
+                            <span asp-validation-for="Total" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm-4 flex-column d-flex">
+                            <label asp-for="Difficulty" class="form-control-label px-3">Difficulty</label>
+                            <input asp-for="Difficulty" type="text">
+                            <span asp-validation-for="Difficulty" class="text-danger"></span>
+                        </div>
+                        <div class="form-group col-sm-4 flex-column d-flex">
+                            <label asp-for="CookingTime" class="form-control-label px-3">Time</label>
+                            <input asp-for="CookingTime" type="text">
+                            <span asp-validation-for="CookingTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-12 flex-column d-flex">
+                            <label asp-for="Description" class="form-control-label px-3">Description</label>
+                            <input asp-for="Description" type="text">
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="form-group col-sm-12 mt-3">
+                            <input type="submit" value="Create" class="btn-block btn-primary"
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {

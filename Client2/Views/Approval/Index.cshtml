@@ -4,24 +4,23 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
 <div class="container">
-      <h2 class="mt-5 mb-3">Request Resep</h2>
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Request ID: 123456</h5>
-          <p class="card-text"><strong>Nama Resep:</strong> lalala</p>
-          <p class="card-text"><strong>Approved:</strong> Yes</p>
+    <h2 class="mt-5 mb-3">Request Resep</h2>
+    @foreach (var item in Model)
+    {
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    Request ID: @Html.DisplayFor(modelItem => item.Id)
+                </h5>
+                <p class="card-text"><strong>Nama Resep: </strong>@Html.DisplayFor(modelItem => item.RecipeName)</p>
+                <p class="card-text"><strong>Approved: </strong>@Html.DisplayFor(modelItem => item.IsApproved)</p>
+                <div>
+                    <div class="btn btn-outline-primary btn-link" data-toogle="modal">
+                        @Html.ActionLink("Edit", "Edit", new {  id=item.Id  })
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="card mb-4">
-        <div class="card-body">
-          <h5 class="card-title">Request ID: 987654</h5>
-          <p class="card-text"><strong>Nama Resep:</strong> yeeyeye</p>
-          <p class="card-text"><strong>Approved:</strong> No</p>
-        </div>
-      </div>
-    </div>
-</div>
+    }
 <div>
