@@ -43,6 +43,9 @@
                         <div class="form-group col-sm-12 mt-3">
                             <input type="submit" value="Save" class="btn-block btn-primary"
                         </div>
+                        <div class="col-sm-12 mt-1 btn btn-danger" data-toogle="modal">
+                            @Html.ActionLink("Delete", "Delete", new {  id = Model.Id  })
+                        </div>
                     </div>
                 </form>
             </div>
